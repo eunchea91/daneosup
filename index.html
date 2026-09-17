@@ -999,33 +999,33 @@
   function jellySvg(mood){
     var eyes, mouth, brows="";
     if(mood==="happy"){
-      eyes = '<path d="M22 19q4-4 8 0" stroke="#2E5B22" stroke-width="2.2" fill="none" stroke-linecap="round"/><path d="M34 19q4-4 8 0" stroke="#2E5B22" stroke-width="2.2" fill="none" stroke-linecap="round"/>';
-      mouth = '<path d="M27 29q5 5 10 0" stroke="#2E5B22" stroke-width="2.2" fill="none" stroke-linecap="round"/>';
+      eyes = '<path d="M22 19q4-4 8 0" stroke="#7A3E12" stroke-width="2.2" fill="none" stroke-linecap="round"/><path d="M34 19q4-4 8 0" stroke="#7A3E12" stroke-width="2.2" fill="none" stroke-linecap="round"/>';
+      mouth = '<path d="M27 29q5 5 10 0" stroke="#7A3E12" stroke-width="2.2" fill="none" stroke-linecap="round"/>';
     } else if(mood==="sad"){
-      eyes = '<circle cx="26" cy="20" r="2.4" fill="#2E5B22"/><circle cx="38" cy="20" r="2.4" fill="#2E5B22"/>';
-      mouth = '<path d="M27 31q5-4 10 0" stroke="#2E5B22" stroke-width="2.2" fill="none" stroke-linecap="round"/>';
-      brows = '<path d="M22 15l5 2" stroke="#2E5B22" stroke-width="1.8" stroke-linecap="round"/><path d="M42 15l-5 2" stroke="#2E5B22" stroke-width="1.8" stroke-linecap="round"/>';
+      eyes = '<circle cx="26" cy="20" r="2.4" fill="#7A3E12"/><circle cx="38" cy="20" r="2.4" fill="#7A3E12"/>';
+      mouth = '<path d="M27 31q5-4 10 0" stroke="#7A3E12" stroke-width="2.2" fill="none" stroke-linecap="round"/>';
+      brows = '<path d="M22 15l5 2" stroke="#7A3E12" stroke-width="1.8" stroke-linecap="round"/><path d="M42 15l-5 2" stroke="#7A3E12" stroke-width="1.8" stroke-linecap="round"/>';
     } else {
-      eyes = '<circle cx="26" cy="20" r="2.4" fill="#2E5B22"/><circle cx="38" cy="20" r="2.4" fill="#2E5B22"/>';
-      mouth = '<path d="M28 28q4 3 8 0" stroke="#2E5B22" stroke-width="2.2" fill="none" stroke-linecap="round"/>';
+      eyes = '<circle cx="26" cy="20" r="2.4" fill="#7A3E12"/><circle cx="38" cy="20" r="2.4" fill="#7A3E12"/>';
+      mouth = '<path d="M28 28q4 3 8 0" stroke="#7A3E12" stroke-width="2.2" fill="none" stroke-linecap="round"/>';
     }
     return '<svg viewBox="0 0 64 74" xmlns="http://www.w3.org/2000/svg">' +
-      '<ellipse cx="21" cy="62" rx="8" ry="7" fill="#8FD14F" stroke="#5B9C34" stroke-width="2"/>' +
-      '<ellipse cx="43" cy="62" rx="8" ry="7" fill="#8FD14F" stroke="#5B9C34" stroke-width="2"/>' +
-      '<ellipse cx="9" cy="43" rx="7" ry="10" fill="#8FD14F" stroke="#5B9C34" stroke-width="2"/>' +
-      '<ellipse cx="55" cy="43" rx="7" ry="10" fill="#8FD14F" stroke="#5B9C34" stroke-width="2"/>' +
-      '<ellipse cx="32" cy="46" rx="18" ry="17" fill="#8FD14F" stroke="#5B9C34" stroke-width="2"/>' +
-      '<circle cx="16" cy="12" r="7" fill="#8FD14F" stroke="#5B9C34" stroke-width="2"/>' +
-      '<circle cx="48" cy="12" r="7" fill="#8FD14F" stroke="#5B9C34" stroke-width="2"/>' +
-      '<circle cx="16" cy="12" r="3" fill="#6FC13A"/>' +
-      '<circle cx="48" cy="12" r="3" fill="#6FC13A"/>' +
-      '<circle cx="32" cy="21" r="15" fill="#8FD14F" stroke="#5B9C34" stroke-width="2"/>' +
-      '<ellipse cx="32" cy="26" rx="8" ry="6" fill="#C9EDA0" opacity=".8"/>' +
+      '<ellipse cx="21" cy="62" rx="8" ry="7" fill="#FFA23C" stroke="#C2701A" stroke-width="2"/>' +
+      '<ellipse cx="43" cy="62" rx="8" ry="7" fill="#FFA23C" stroke="#C2701A" stroke-width="2"/>' +
+      '<ellipse cx="12" cy="44" rx="5" ry="8" fill="#FFA23C" stroke="#C2701A" stroke-width="2"/>' +
+      '<ellipse cx="52" cy="44" rx="5" ry="8" fill="#FFA23C" stroke="#C2701A" stroke-width="2"/>' +
+      '<ellipse cx="32" cy="46" rx="18" ry="17" fill="#FFA23C" stroke="#C2701A" stroke-width="2"/>' +
+      '<circle cx="16" cy="12" r="7" fill="#FFA23C" stroke="#C2701A" stroke-width="2"/>' +
+      '<circle cx="48" cy="12" r="7" fill="#FFA23C" stroke="#C2701A" stroke-width="2"/>' +
+      '<circle cx="16" cy="12" r="3" fill="#FFB65C"/>' +
+      '<circle cx="48" cy="12" r="3" fill="#FFB65C"/>' +
+      '<circle cx="32" cy="21" r="15" fill="#FFA23C" stroke="#C2701A" stroke-width="2"/>' +
+      '<ellipse cx="32" cy="26" rx="8" ry="6" fill="#FFE1B0" opacity=".85"/>' +
       '<ellipse cx="25" cy="9" rx="6" ry="3.5" fill="#fff" opacity=".35"/>' +
       '<ellipse cx="18" cy="26" rx="3.6" ry="2.4" fill="#FF9EBB" opacity=".55"/>' +
       '<ellipse cx="46" cy="26" rx="3.6" ry="2.4" fill="#FF9EBB" opacity=".55"/>' +
       brows + eyes +
-      '<ellipse cx="32" cy="24" rx="1.6" ry="1.2" fill="#2E5B22"/>' +
+      '<ellipse cx="32" cy="24" rx="1.6" ry="1.2" fill="#7A3E12"/>' +
       mouth +
     '</svg>';
   }
