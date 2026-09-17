@@ -280,7 +280,7 @@
 
   /* jelly mascot */
   .jelly-row{ display:flex; align-items:flex-start; gap:10px; margin:14px 0 18px; }
-  .jelly-icon{ width:44px; height:44px; flex:none; }
+  .jelly-icon{ width:44px; height:50px; flex:none; }
   .jelly-icon svg{ width:100%; height:100%; display:block; }
   .jelly-bubble{
     position:relative; flex:1; background:var(--surface); border:1px solid var(--border);
@@ -997,23 +997,36 @@
 
   /* ---------- jelly mascot ---------- */
   function jellySvg(mood){
-    var eyes, mouth;
+    var eyes, mouth, brows="";
     if(mood==="happy"){
-      eyes = '<path d="M20 29q4-5 8 0" stroke="#2E5B22" stroke-width="2.4" fill="none" stroke-linecap="round"/><path d="M36 29q4-5 8 0" stroke="#2E5B22" stroke-width="2.4" fill="none" stroke-linecap="round"/>';
-      mouth = '<path d="M23 36q9 9 18 0" stroke="#2E5B22" stroke-width="2.4" fill="none" stroke-linecap="round"/>';
+      eyes = '<path d="M22 19q4-4 8 0" stroke="#2E5B22" stroke-width="2.2" fill="none" stroke-linecap="round"/><path d="M34 19q4-4 8 0" stroke="#2E5B22" stroke-width="2.2" fill="none" stroke-linecap="round"/>';
+      mouth = '<path d="M27 29q5 5 10 0" stroke="#2E5B22" stroke-width="2.2" fill="none" stroke-linecap="round"/>';
     } else if(mood==="sad"){
-      eyes = '<circle cx="24" cy="30" r="3" fill="#2E5B22"/><circle cx="40" cy="30" r="3" fill="#2E5B22"/>';
-      mouth = '<path d="M23 39q9-7 18 0" stroke="#2E5B22" stroke-width="2.4" fill="none" stroke-linecap="round"/>';
+      eyes = '<circle cx="26" cy="20" r="2.4" fill="#2E5B22"/><circle cx="38" cy="20" r="2.4" fill="#2E5B22"/>';
+      mouth = '<path d="M27 31q5-4 10 0" stroke="#2E5B22" stroke-width="2.2" fill="none" stroke-linecap="round"/>';
+      brows = '<path d="M22 15l5 2" stroke="#2E5B22" stroke-width="1.8" stroke-linecap="round"/><path d="M42 15l-5 2" stroke="#2E5B22" stroke-width="1.8" stroke-linecap="round"/>';
     } else {
-      eyes = '<circle cx="24" cy="30" r="3" fill="#2E5B22"/><circle cx="40" cy="30" r="3" fill="#2E5B22"/>';
-      mouth = '<path d="M25 36q7 6 14 0" stroke="#2E5B22" stroke-width="2.4" fill="none" stroke-linecap="round"/>';
+      eyes = '<circle cx="26" cy="20" r="2.4" fill="#2E5B22"/><circle cx="38" cy="20" r="2.4" fill="#2E5B22"/>';
+      mouth = '<path d="M28 28q4 3 8 0" stroke="#2E5B22" stroke-width="2.2" fill="none" stroke-linecap="round"/>';
     }
-    return '<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">' +
-      '<path d="M32 6C46 6 54 16 54 32S45 58 32 58 10 46 10 32 18 6 32 6Z" fill="#8FD14F" stroke="#5B9C34" stroke-width="2"/>' +
-      '<ellipse cx="24" cy="16" rx="7" ry="4" fill="#fff" opacity=".35"/>' +
-      '<ellipse cx="18" cy="42" rx="5" ry="3.2" fill="#FF9EBB" opacity=".55"/>' +
-      '<ellipse cx="46" cy="42" rx="5" ry="3.2" fill="#FF9EBB" opacity=".55"/>' +
-      eyes + mouth +
+    return '<svg viewBox="0 0 64 74" xmlns="http://www.w3.org/2000/svg">' +
+      '<ellipse cx="21" cy="62" rx="8" ry="7" fill="#8FD14F" stroke="#5B9C34" stroke-width="2"/>' +
+      '<ellipse cx="43" cy="62" rx="8" ry="7" fill="#8FD14F" stroke="#5B9C34" stroke-width="2"/>' +
+      '<ellipse cx="9" cy="43" rx="7" ry="10" fill="#8FD14F" stroke="#5B9C34" stroke-width="2"/>' +
+      '<ellipse cx="55" cy="43" rx="7" ry="10" fill="#8FD14F" stroke="#5B9C34" stroke-width="2"/>' +
+      '<ellipse cx="32" cy="46" rx="18" ry="17" fill="#8FD14F" stroke="#5B9C34" stroke-width="2"/>' +
+      '<circle cx="16" cy="12" r="7" fill="#8FD14F" stroke="#5B9C34" stroke-width="2"/>' +
+      '<circle cx="48" cy="12" r="7" fill="#8FD14F" stroke="#5B9C34" stroke-width="2"/>' +
+      '<circle cx="16" cy="12" r="3" fill="#6FC13A"/>' +
+      '<circle cx="48" cy="12" r="3" fill="#6FC13A"/>' +
+      '<circle cx="32" cy="21" r="15" fill="#8FD14F" stroke="#5B9C34" stroke-width="2"/>' +
+      '<ellipse cx="32" cy="26" rx="8" ry="6" fill="#C9EDA0" opacity=".8"/>' +
+      '<ellipse cx="25" cy="9" rx="6" ry="3.5" fill="#fff" opacity=".35"/>' +
+      '<ellipse cx="18" cy="26" rx="3.6" ry="2.4" fill="#FF9EBB" opacity=".55"/>' +
+      '<ellipse cx="46" cy="26" rx="3.6" ry="2.4" fill="#FF9EBB" opacity=".55"/>' +
+      brows + eyes +
+      '<ellipse cx="32" cy="24" rx="1.6" ry="1.2" fill="#2E5B22"/>' +
+      mouth +
     '</svg>';
   }
   function jellyBubble(text, mood){
