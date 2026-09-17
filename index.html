@@ -278,6 +278,25 @@
   }
   .mode-note{ font-size:11px; color:var(--ink-muted); text-align:center; margin-top:18px; }
 
+  /* jelly mascot */
+  .jelly-row{ display:flex; align-items:flex-start; gap:10px; margin:14px 0 18px; }
+  .jelly-icon{ width:44px; height:44px; flex:none; }
+  .jelly-icon svg{ width:100%; height:100%; display:block; }
+  .jelly-bubble{
+    position:relative; flex:1; background:var(--surface); border:1px solid var(--border);
+    border-radius:14px; padding:10px 14px; font-size:13.5px; line-height:1.45; box-shadow:var(--shadow);
+    align-self:center;
+  }
+  .jelly-bubble:before{
+    content:""; position:absolute; left:-6px; top:16px; width:12px; height:12px;
+    background:var(--surface); border-left:1px solid var(--border); border-bottom:1px solid var(--border);
+    transform:rotate(45deg);
+  }
+  .jelly-bubble.happy{ border-color:var(--accent); background:var(--accent-soft); }
+  .jelly-bubble.happy:before{ border-color:var(--accent); background:var(--accent-soft); }
+  .jelly-bubble.sad{ border-color:var(--warn); background:var(--warn-soft); }
+  .jelly-bubble.sad:before{ border-color:var(--warn); background:var(--warn-soft); }
+
   .modal-overlay{
     position:fixed; inset:0; z-index:50; background:rgba(20,24,19,.45);
     display:flex; align-items:center; justify-content:center; padding:20px;
@@ -976,6 +995,48 @@
     }catch(e){}
   }
 
+  /* ---------- jelly mascot ---------- */
+  function jellySvg(mood){
+    var eyes, mouth;
+    if(mood==="happy"){
+      eyes = '<path d="M20 29q4-5 8 0" stroke="#2E5B22" stroke-width="2.4" fill="none" stroke-linecap="round"/><path d="M36 29q4-5 8 0" stroke="#2E5B22" stroke-width="2.4" fill="none" stroke-linecap="round"/>';
+      mouth = '<path d="M23 36q9 9 18 0" stroke="#2E5B22" stroke-width="2.4" fill="none" stroke-linecap="round"/>';
+    } else if(mood==="sad"){
+      eyes = '<circle cx="24" cy="30" r="3" fill="#2E5B22"/><circle cx="40" cy="30" r="3" fill="#2E5B22"/>';
+      mouth = '<path d="M23 39q9-7 18 0" stroke="#2E5B22" stroke-width="2.4" fill="none" stroke-linecap="round"/>';
+    } else {
+      eyes = '<circle cx="24" cy="30" r="3" fill="#2E5B22"/><circle cx="40" cy="30" r="3" fill="#2E5B22"/>';
+      mouth = '<path d="M25 36q7 6 14 0" stroke="#2E5B22" stroke-width="2.4" fill="none" stroke-linecap="round"/>';
+    }
+    return '<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">' +
+      '<path d="M32 6C46 6 54 16 54 32S45 58 32 58 10 46 10 32 18 6 32 6Z" fill="#8FD14F" stroke="#5B9C34" stroke-width="2"/>' +
+      '<ellipse cx="24" cy="16" rx="7" ry="4" fill="#fff" opacity=".35"/>' +
+      '<ellipse cx="18" cy="42" rx="5" ry="3.2" fill="#FF9EBB" opacity=".55"/>' +
+      '<ellipse cx="46" cy="42" rx="5" ry="3.2" fill="#FF9EBB" opacity=".55"/>' +
+      eyes + mouth +
+    '</svg>';
+  }
+  function jellyBubble(text, mood){
+    return '<div class="jelly-row"><div class="jelly-icon">'+jellySvg(mood)+'</div>' +
+      '<div class="jelly-bubble'+(mood?" "+mood:"")+'">'+esc(text)+'</div></div>';
+  }
+  var JELLY_LEARN_MSGS = ["카드를 천천히 넘기면서 눈에 익혀봐!","잘하고 있어, 계속 가보자!","단어는 반복이 최고야, 화이팅!","조금만 더 힘내!","거의 다 왔어, 대단해!"];
+  var JELLY_CORRECT_MSGS = ["정답이야! 최고! 🎉","맞았어! 짝짝짝 👏","완벽해, 잘했어!"];
+  var JELLY_WRONG_MSGS = ["괜찮아, 다음엔 맞출 수 있어!","실수해도 돼, 다시 기억해보자!","아쉽다! 그래도 잘하고 있어!"];
+  function pickJellyMsg(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+  function jellyHomeMessage(streak, studiedToday, todayTotal){
+    if(todayTotal>0 && studiedToday>=todayTotal) return "오늘 목표 단어를 다 끝냈어! 내가 다 뿌듯하다 🎉";
+    if(streak>=7) return "우와, "+streak+"일 연속 학습이라니! 진짜 대단해!";
+    if(streak>=3) return "벌써 "+streak+"일째야! 나도 신난다 🍬";
+    if(streak>=1) return streak+"일 연속 학습 중이네! 오늘도 가보자!";
+    return "안녕, 나는 젤리야! 오늘 단어를 같이 배워볼까?";
+  }
+  function jellyResultMessage(correctCount, total){
+    if(total>0 && correctCount===total) return "만점이라니 정말 대단해! 내가 다 자랑스러워 🎉";
+    if(total>0 && correctCount/total>=0.7) return "잘했어! 조금만 더 연습하면 완벽할 거야!";
+    return "여기서 포기하지 마! 나랑 다시 도전해보자!";
+  }
+
   /* ---------- state ---------- */
   var db = null;
   var mode = "loading";
@@ -1190,7 +1251,8 @@
   function submitAnswer(value){
     var q=quizSession.questions[quizSession.index];
     var correct = q.format==="mcq" ? value===q.answer : value.trim().toLowerCase()===q.answer.trim().toLowerCase();
-    quizSession.answers.push(Object.assign({}, q, {given:value, correct:correct}));
+    var jellyMsg = pickJellyMsg(correct ? JELLY_CORRECT_MSGS : JELLY_WRONG_MSGS);
+    quizSession.answers.push(Object.assign({}, q, {given:value, correct:correct, jellyMsg:jellyMsg}));
     applyResult(q.id, correct);
     quizSession.awaitingNext=true;
     render();
@@ -1354,6 +1416,7 @@
     var studiedToday=todayIds.filter(function(id){ return words[id] && progress[id] && progress[id].seen; }).length;
     var html = renderTopbar("");
     html += '<div>';
+    html += jellyBubble(jellyHomeMessage(streak, studiedToday, todayIds.length));
     if(streak>0) html += '<div class="streak-pill">연속 '+streak+'일째 학습 중</div><br>';
     html += '<h2>오늘도 단어를 쌓아볼까요?</h2>';
     html += '<div class="stat-grid">' +
@@ -1409,6 +1472,7 @@
     html += '<div>';
     html += '<div class="quiz-progress"><span>'+(learnIndex+1)+' / '+ids.length+'</span><span>탭해서 뜻 보기</span></div>';
     html += '<div class="progress-track"><div class="progress-fill" style="width:'+pct+'%"></div></div>';
+    html += jellyBubble(JELLY_LEARN_MSGS[learnIndex % JELLY_LEARN_MSGS.length]);
     html += '<div class="flip-scene"><div class="flip-card'+(learnFlipped?" flipped":"")+'" data-action="flip-card">' +
       '<div class="flip-face front">' +
         '<button type="button" class="star-btn flip-star" data-action="toggle-star" data-id="'+esc(id)+'" aria-label="즐겨찾기">'+(w.starred?"★":"☆")+'</button>' +
@@ -1440,6 +1504,7 @@
       var correctCount=quizSession.answers.filter(function(a){ return a.correct; }).length;
       var total=quizSession.answers.length;
       var wrongIds=quizSession.answers.filter(function(a){ return !a.correct; }).map(function(a){ return a.id; });
+      html += jellyBubble(jellyResultMessage(correctCount, total), correctCount===total ? "happy" : (correctCount/total<0.5 ? "sad" : ""));
       html += '<div class="card" style="text-align:center;">' +
         '<h2>'+correctCount+' / '+total+' 정답</h2>' +
         '<p style="color:var(--ink-muted);font-size:13.5px;">'+(correctCount===total?"완벽해요!":"틀린 단어는 계속 복습 목록에 남아있어요.")+'</p>' +
@@ -1499,6 +1564,7 @@
     }
 
     if(answered){
+      html += jellyBubble(lastAnswer.jellyMsg, lastAnswer.correct ? "happy" : "sad");
       html += '<div class="btn-row"><button class="btn btn-primary btn-block" data-action="next-question">'+(quizSession.index+1<quizSession.questions.length?"다음 문제":"결과 보기")+'</button></div>';
     }
 
